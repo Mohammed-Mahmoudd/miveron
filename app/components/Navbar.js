@@ -64,8 +64,8 @@ export default function Navbar() {
             <Link href="/collections" className={styles.navLink}>
               Collections
             </Link>
-            <Link href="/about" className={styles.navLink}>
-              About
+            <Link href="/contact" className={styles.navLink}>
+              Contact
             </Link>
           </div>
 
@@ -122,11 +122,11 @@ export default function Navbar() {
             Collections
           </Link>
           <Link
-            href="/about"
+            href="/contact"
             className={styles.mobileLink}
             onClick={() => setMenuOpen(false)}
           >
-            About
+            Contact
           </Link>
           <div className={styles.mobileDivider} />
           <span className={styles.mobileTagline}>Before everyone else.</span>

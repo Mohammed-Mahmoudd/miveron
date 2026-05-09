@@ -61,11 +61,8 @@ export default function Footer() {
           {/* Brand */}
           <div className={styles.col}>
             <h4 className={styles.colTitle}>Brand / علامتنا</h4>
-            <Link href="/about" className={styles.link}>
-              Our Story
-            </Link>
-            <Link href="/about#philosophy" className={styles.link}>
-              Philosophy
+            <Link href="/contact" className={styles.link}>
+              Contact Us
             </Link>
           </div>
 
