@@ -1,0 +1,210 @@
+.portalContainer {
+  position: relative;
+  width: 100%;
+}
+
+.portalSection {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: var(--black);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* ── PARALLAX SPLIT TEXT ── */
+.parallaxText {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.textTop,
+.textBottom {
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 12vw, 10rem);
+  font-weight: 800;
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  will-change: transform;
+}
+
+.textTop {
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.12);
+}
+
+.textBottom {
+  color: var(--white);
+  opacity: 0.06;
+}
+
+/* ── PORTAL CIRCLE ── */
+.portal {
+  position: relative;
+  width: clamp(200px, 30vw, 350px);
+  height: clamp(200px, 30vw, 350px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  will-change: transform, opacity;
+}
+
+.portalInner {
+  width: 60%;
+  height: 60%;
+  border-radius: 50%;
+  background: var(--black); /* Pure black so when it scales, it fills the screen with darkness */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+}
+
+.portalLabel {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.4em;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+}
+
+.portalRing {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  animation: portalPulse 4s ease-in-out infinite;
+}
+
+.portalRingOuter {
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  animation: portalPulse 4s ease-in-out infinite 1s;
+}
+
+@keyframes portalPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.06); opacity: 0.5; }
+}
+
+/* ── PRODUCTS INSIDE PORTAL ── */
+.portalProductsWrap {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 var(--space-xl);
+  opacity: 0; /* Hidden until animated */
+  pointer-events: none; /* Let clicks pass through until animated if needed, or we can toggle it */
+}
+
+/* We want pointer-events to be active when opacity is 1. GSAP can't easily toggle pointer-events without a callback, but setting it to auto in CSS when visible helps, though GSAP sets inline styles. For now, pointer-events: auto on the grid itself. */
+.portalProductsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl);
+  width: 100%;
+  max-width: 1200px;
+  pointer-events: auto;
+}
+
+.portalProductsTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-weight: 700;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-3xl);
+  text-align: center;
+}
+
+/* ── MARQUEE ── */
+.marquee {
+  position: absolute;
+  bottom: var(--space-3xl);
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.marqueeTrack {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+
+.marqueeItem {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: rgba(255, 255, 255, 0.1);
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 0 var(--space-md);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .portalSection {
+    min-height: 70vh;
+    padding: var(--space-4xl) 0;
+  }
+
+  .textTop,
+  .textBottom {
+    font-size: clamp(2.5rem, 15vw, 5rem);
+  }
+
+  .portal {
+    width: 180px;
+    height: 180px;
+  }
+
+  .marqueeItem {
+    font-size: 0.6rem;
+  }
+
+  .portalProductsGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-md);
+    width: 100%;
+    max-width: 320px;
+  }
+}
+
+@media (max-width: 480px) {
+  .portalSection {
+    min-height: 60vh;
+  }
+
+  .textTop,
+  .textBottom {
+    font-size: 2.5rem;
+  }
+
+  .portal {
+    width: 140px;
+    height: 140px;
+  }
+}

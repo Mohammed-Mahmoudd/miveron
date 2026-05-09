@@ -1,0 +1,265 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 1100;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--duration-normal) var(--ease-out);
+}
+
+.overlayVisible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 420px;
+  max-width: 100vw;
+  height: 100vh;
+  background: var(--carbon);
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform var(--duration-slow) var(--ease-out);
+  border-left: var(--border-subtle);
+}
+
+.drawerOpen {
+  transform: translateX(0);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-xl);
+  border-bottom: var(--border-subtle);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.closeBtn {
+  color: var(--mist);
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.closeBtn:hover {
+  color: var(--white);
+}
+
+/* Empty State */
+.empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-md);
+  padding: var(--space-xl);
+}
+
+.emptyIcon {
+  color: var(--smoke);
+  margin-bottom: var(--space-sm);
+}
+
+.emptyText {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--silver);
+}
+
+.emptySubtext {
+  font-size: 0.85rem;
+  color: var(--mist);
+}
+
+/* Items */
+.itemsList {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-lg);
+}
+
+.item {
+  display: flex;
+  gap: var(--space-md);
+  padding: var(--space-md) 0;
+  border-bottom: var(--border-subtle);
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.itemImage {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-md);
+  flex-shrink: 0;
+  overflow: hidden;
+  background: var(--smoke);
+}
+
+.itemImagePhoto {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.itemDetails {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.itemTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.itemName {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.itemColor {
+  font-size: 0.75rem;
+  color: var(--mist);
+  margin-top: 2px;
+}
+
+.removeBtn {
+  color: var(--mist);
+  padding: 2px;
+  transition: color var(--duration-fast) var(--ease-out);
+}
+
+.removeBtn:hover {
+  color: #e74c3c;
+}
+
+.itemBottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: var(--space-sm);
+}
+
+.qtyControls {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: var(--border-light);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.qtyBtn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  color: var(--silver);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.qtyBtn:hover {
+  background: var(--smoke);
+  color: var(--white);
+}
+
+.qtyValue {
+  width: 28px;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.itemPrice {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+/* Footer */
+.footer {
+  padding: var(--space-xl);
+  border-top: var(--border-light);
+  background: var(--ash);
+}
+
+.totalRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+}
+
+.totalLabel {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--silver);
+}
+
+.totalPrice {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.checkoutBtn {
+  width: 100%;
+  padding: 16px;
+  background: var(--white);
+  color: var(--black);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  transition: all var(--duration-fast) var(--ease-out);
+}
+
+.checkoutBtn:hover {
+  background: var(--cream);
+  transform: translateY(-1px);
+}
+
+.shippingNote {
+  text-align: center;
+  font-size: 0.7rem;
+  color: var(--mist);
+  margin-top: var(--space-sm);
+}
+
+@media (max-width: 480px) {
+  .drawer {
+    width: 100vw;
+  }
+}

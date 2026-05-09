@@ -1,0 +1,73 @@
+import Link from "next/link";
+import Image from "next/image";
+import { products, collections } from "../data/products";
+import styles from "./collections.module.css";
+
+export const metadata = {
+  title: "Collections — MIVERON",
+  description: "Explore MIVERON's watch collections: Core, Icon, and Limited.",
+};
+
+export default function CollectionsPage() {
+  return (
+    <div className={styles.page}>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <h1 className={styles.title}>Collections</h1>
+          <p className={styles.subtitle}>
+            Three tiers. One standard. Each designed with intent.
+          </p>
+        </div>
+
+        <div className={styles.collectionsStack}>
+          {collections.map((col, idx) => {
+            const colProducts = products.filter(
+              (p) => p.collection.toLowerCase() === col.id
+            );
+
+            return (
+              <div key={col.id} className={styles.collectionSection} id={`collection-section-${col.id}`}>
+                <div className={styles.collectionHeader}>
+                  <div className={styles.collectionMeta}>
+                    <span className={styles.collectionNumber}>0{idx + 1}</span>
+                    <div>
+                      <h2 className={styles.collectionName}>{col.name}</h2>
+                      <p className={styles.collectionDesc}>{col.description}</p>
+                    </div>
+                  </div>
+                  <span className={styles.collectionPrice}>{col.priceRange}</span>
+                </div>
+
+                <div className={styles.productsRow}>
+                  {colProducts.map((p) => (
+                    <Link href={`/product/${p.id}`} key={p.id} className={styles.productTile}>
+                      <div className={styles.productImageWrap}>
+                        <Image
+                          src={p.image}
+                          alt={p.name}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          className={styles.productImage}
+                        />
+                        {p.badge && (
+                          <span className={styles.productBadge}>{p.badge}</span>
+                        )}
+                      </div>
+                      <div className={styles.productInfo}>
+                        <h4 className={styles.productName}>{p.name}</h4>
+                        <p className={styles.productTagline}>{p.tagline}</p>
+                        <p className={styles.productPrice}>
+                          {p.currency} {p.price.toLocaleString()}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
