@@ -6,7 +6,7 @@
 
 .imageWrap {
   position: relative;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
   border-radius: var(--radius-md);
   overflow: hidden;
   display: block;
@@ -167,7 +167,7 @@
 
 @media (max-width: 480px) {
   .imageWrap {
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 1 / 1;
   }
 
   .badge {
