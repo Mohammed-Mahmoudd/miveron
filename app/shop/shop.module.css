@@ -166,8 +166,7 @@
 
 @media (max-width: 480px) {
   .grid {
-    grid-template-columns: 1fr;
-    max-width: 360px;
-    margin: 0 auto;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
   }
 }
