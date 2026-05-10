@@ -240,4 +240,10 @@
   .inner {
     padding: 0 var(--space-md);
   }
+
+  .navbar.scrolled {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(0, 0, 0, 0.95);
+  }
 }

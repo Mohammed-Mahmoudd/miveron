@@ -78,7 +78,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -88,7 +87,7 @@ body {
   background-color: var(--black);
   color: var(--white);
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 a {
@@ -305,5 +304,11 @@ input, textarea, select {
   
   .section {
     padding: var(--space-3xl) 0;
+  }
+
+  /* Disable expensive grain overlay and animations on mobile to prevent scroll lag */
+  .grain-overlay::before {
+    display: none;
+    animation: none;
   }
 }

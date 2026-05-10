@@ -9,7 +9,7 @@ export default function Footer() {
         <div className={styles.marqueeTrack}>
           <span>BEFORE EVERYONE ELSE</span>
           <span className={styles.dot}>●</span>
-          <span>DON'T FOLLOW TIME. SET IT.</span>
+          <span>DON&apos;T FOLLOW TIME. SET IT.</span>
           <span className={styles.dot}>●</span>
           <span>EST. CAIRO</span>
           <span className={styles.dot}>●</span>
@@ -19,7 +19,7 @@ export default function Footer() {
           <span className={styles.dot}>●</span>
           <span>BEFORE EVERYONE ELSE</span>
           <span className={styles.dot}>●</span>
-          <span>DON'T FOLLOW TIME. SET IT.</span>
+          <span>DON&apos;T FOLLOW TIME. SET IT.</span>
           <span className={styles.dot}>●</span>
           <span>EST. CAIRO</span>
           <span className={styles.dot}>●</span>

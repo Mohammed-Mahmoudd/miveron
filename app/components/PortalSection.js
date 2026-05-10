@@ -105,7 +105,7 @@ export default function PortalSection() {
     <section className={styles.portalSection} ref={sectionRef}>
       {/* Parallax Split Text */}
       <div className={styles.parallaxText}>
-        <h2 className={styles.textTop} ref={textTopRef}>DON'T FOLLOW</h2>
+        <h2 className={styles.textTop} ref={textTopRef}>DON&apos;T FOLLOW</h2>
         <h2 className={styles.textBottom} ref={textBottomRef}>TIME.</h2>
       </div>
 

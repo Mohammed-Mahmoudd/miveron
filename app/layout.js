@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import CartProvider from "./context/CartContext";
+import Script from "next/script";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -38,6 +39,18 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${cairo.variable}`}>
       <body className="grain-overlay">
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-Q9HXSSWMMH"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-Q9HXSSWMMH');
+          `}
+        </Script>
         <CartProvider>
           <Navbar />
           <main>{children}</main>

@@ -51,7 +51,7 @@ export default function ParallaxSection() {
   return (
     <section className={styles.parallaxSection} ref={sectionRef}>
       <div className={styles.parallaxTextWrap}>
-        <h2 className={styles.parallaxTextOutline} ref={textTopRef}>DON'T FOLLOW</h2>
+        <h2 className={styles.parallaxTextOutline} ref={textTopRef}>DON&apos;T FOLLOW</h2>
         <h2 className={styles.parallaxTextSolid} ref={textBottomRef}>TIME.</h2>
       </div>
     </section>
