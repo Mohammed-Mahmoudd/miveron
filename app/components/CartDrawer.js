@@ -2,6 +2,7 @@
 
 import { useCart } from "../context/CartContext";
 import styles from "./CartDrawer.module.css";
+import Link from "next/link";
 
 export default function CartDrawer() {
   const { items, isOpen, setIsOpen, removeItem, updateQuantity, totalPrice } =
@@ -134,9 +135,9 @@ export default function CartDrawer() {
                   EGP {totalPrice.toLocaleString()}
                 </span>
               </div>
-              <button className={styles.checkoutBtn} id="checkout-button">
+              <Link href="/checkout" className={styles.checkoutBtn} id="checkout-button" onClick={() => setIsOpen(false)}>
                 Checkout
-              </button>
+              </Link>
               <p className={styles.shippingNote}>
                 Shipping calculated at checkout
               </p>
