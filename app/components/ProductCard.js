@@ -18,9 +18,6 @@ export default function ProductCard({ product }) {
           sizes="(max-width: 480px) 50vw, (max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
           className={styles.image}
         />
-        {product.badge && (
-          <span className={styles.badge}>{product.badge}</span>
-        )}
         <div className={styles.quickAdd}>
           <button
             className={styles.quickAddBtn}
@@ -42,7 +39,7 @@ export default function ProductCard({ product }) {
         <p className={styles.color}>{product.color}</p>
         <div className={styles.priceRow}>
           <span className={styles.price}>
-            {product.currency} {product.price.toLocaleString()}
+            {product.currency || "EGP"} {product.price?.toLocaleString() || "—"}
           </span>
           {!product.inStock && (
             <span className={styles.soldOut}>Sold Out</span>

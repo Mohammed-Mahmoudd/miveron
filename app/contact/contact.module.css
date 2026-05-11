@@ -10,162 +10,191 @@
   padding: 0 var(--space-xl);
 }
 
+/* ── Hero ── */
+.hero {
+  padding: var(--space-5xl) 0 var(--space-3xl);
+  text-align: center;
+  animation: fadeInUp var(--duration-slow) var(--ease-out);
+}
+
 .label {
   font-family: var(--font-display);
   font-size: 0.65rem;
   font-weight: 600;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
   color: var(--accent);
   display: block;
-  margin-bottom: var(--space-sm);
-}
-
-.accent {
-  color: var(--accent);
-}
-
-/* Hero */
-.hero {
-  padding: var(--space-5xl) 0;
-  animation: fadeInUp var(--duration-slow) var(--ease-out);
+  margin-bottom: var(--space-lg);
 }
 
 .heroTitle {
   font-family: var(--font-display);
-  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
   color: var(--white);
   margin-bottom: var(--space-xl);
-  max-width: 700px;
+}
+
+.accent {
+  background: linear-gradient(135deg, var(--accent), #c8a97e);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .heroSub {
   font-size: 1.05rem;
   color: var(--mist);
   line-height: 1.7;
-  max-width: 560px;
+  max-width: 480px;
+  margin: 0 auto;
 }
 
-/* Contact Grid */
+/* ── Contact Cards Grid ── */
 .contactSection {
-  padding: var(--space-5xl) 0;
-  background: var(--carbon);
+  padding: 0 0 var(--space-5xl);
 }
 
-.contactGrid {
+.cardsGrid {
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: var(--space-4xl);
-  align-items: start;
-}
-
-.contactInfoTitle {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 2.8rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--white);
-  line-height: 1.2;
-  margin-bottom: var(--space-xl);
-}
-
-.infoBlock {
-  margin-bottom: var(--space-2xl);
-}
-
-.infoLabel {
-  font-family: var(--font-display);
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--smoke);
-  margin-bottom: var(--space-xs);
-}
-
-.infoValue {
-  font-size: 1.1rem;
-  color: var(--white);
-}
-
-.infoLink {
-  color: var(--white);
-  text-decoration: none;
-  transition: color var(--duration-fast) var(--ease-out);
-}
-
-.infoLink:hover {
-  color: var(--accent);
-}
-
-/* Form */
-.form {
-  display: flex;
-  flex-direction: column;
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-lg);
+  max-width: 1000px;
+  margin: 0 auto;
 }
 
-.formGroup {
+.card {
   display: flex;
   flex-direction: column;
-  gap: var(--space-xs);
-}
-
-.input {
-  width: 100%;
-  padding: var(--space-md);
+  align-items: center;
+  text-align: center;
+  gap: var(--space-md);
+  padding: var(--space-2xl) var(--space-xl);
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-lg);
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-4px);
+}
+
+.cardIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.06);
   color: var(--white);
-  font-family: inherit;
-  font-size: 1rem;
-  transition: all var(--duration-fast) var(--ease-out);
+  transition: all 0.4s var(--ease-out);
 }
 
-.input:focus {
-  outline: none;
-  border-color: var(--accent);
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.textarea {
-  min-height: 150px;
-  resize: vertical;
-}
-
-.submitBtn {
-  align-self: flex-start;
-  padding: var(--space-md) var(--space-2xl);
+.card:hover .cardIcon {
   background: var(--white);
   color: var(--black);
-  border: none;
-  border-radius: var(--radius-sm);
+  transform: scale(1.1);
+}
+
+.cardLabel {
   font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 0.9rem;
-  letter-spacing: 0.05em;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  cursor: pointer;
-  transition: all var(--duration-fast) var(--ease-out);
+  color: var(--smoke);
 }
 
-.submitBtn:hover {
-  background: var(--accent);
+.cardValue {
+  font-size: 1rem;
+  font-weight: 500;
   color: var(--white);
-  transform: translateY(-2px);
+  line-height: 1.4;
 }
 
+.cardHint {
+  font-size: 0.75rem;
+  color: var(--steel);
+  margin-top: -4px;
+}
+
+/* ── Location Banner ── */
+.locationBanner {
+  max-width: 700px;
+  margin: var(--space-lg) auto 0;
+  padding: var(--space-xl) var(--space-2xl);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+}
+
+.locationIcon {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  color: var(--smoke);
+}
+
+.locationText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.locationCity {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: 0.02em;
+}
+
+.locationNote {
+  font-size: 0.8rem;
+  color: var(--steel);
+}
+
+/* ── Responsive ── */
 @media (max-width: 768px) {
   .container {
     padding: 0 var(--space-md);
   }
 
-  .contactGrid {
+  .hero {
+    padding: var(--space-3xl) 0 var(--space-2xl);
+  }
+
+  .cardsGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+  }
+
+  .card {
+    padding: var(--space-xl) var(--space-md);
+  }
+
+  .locationBanner {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-md);
+    padding: var(--space-xl);
+  }
+}
+
+@media (max-width: 480px) {
+  .cardsGrid {
     grid-template-columns: 1fr;
-    gap: var(--space-2xl);
   }
 }

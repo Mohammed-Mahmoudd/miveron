@@ -1,173 +1,221 @@
-"use client";
-
-import { use } from "react";
 import { notFound } from "next/navigation";
-import Link from "next/link";
-import Image from "next/image";
-import { products } from "../../data/products";
-import { useCart } from "../../context/CartContext";
-import styles from "./product.module.css";
+import { client } from "../../../lib/sanity";
+import ProductDetail from "./ProductDetail";
 
-export default function ProductPage({ params }) {
-  const { id } = use(params);
-  const product = products.find((p) => p.id === id);
-  const { addItem } = useCart();
+const BASE_URL = "https://miveron.com";
+
+async function getProduct(id) {
+  const query = `*[_type == "product" && _id == $id][0]{
+    "id": _id,
+    name,
+    price,
+    "collection": collection,
+    "image": image.asset->url,
+    description,
+    variants[]{
+      colorName,
+      colorCode,
+      "image": image.asset->url
+    },
+    "gallery": gallery[].asset->url,
+    badge,
+    tagline,
+    currency,
+    caseSize,
+    movement,
+    caseMaterial,
+    crystal,
+    strapMaterial,
+    waterResistance,
+    features,
+    inStock
+  }`;
+
+  return await client.fetch(query, { id });
+}
+
+async function getRelatedProducts(collection, excludeId) {
+  if (!collection) return [];
+
+  const query = `*[_type == "product" && collection == $collection && _id != $id && !(_id in path("drafts.**"))][0...3]{
+    "id": _id,
+    name,
+    price,
+    currency,
+    "image": image.asset->url
+  }`;
+
+  const data = await client.fetch(query, { collection, id: excludeId });
+  return data || [];
+}
+
+// Dynamic metadata for each product page
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const product = await getProduct(id);
+
+  if (!product) {
+    return {
+      title: "Product Not Found",
+    };
+  }
+
+  const title = `${product.name} — Premium Watch`;
+  const description = product.description
+    ? `${product.description.slice(0, 150)}. Buy ${product.name} from MIVERON with free delivery across Egypt.`
+    : `Buy ${product.name} — premium luxury watch from MIVERON. Free delivery across Egypt. Cash on delivery available. ساعة فاخرة`;
+  const productUrl = `${BASE_URL}/product/${product.id}`;
+
+  return {
+    title,
+    description,
+    keywords: [
+      product.name,
+      "luxury watch",
+      "premium watch Egypt",
+      "buy watch online",
+      product.collection ? `${product.collection} collection` : "",
+      "MIVERON",
+      "ساعة فاخرة",
+      "شراء ساعات مصر",
+    ].filter(Boolean),
+    alternates: {
+      canonical: productUrl,
+    },
+    openGraph: {
+      title: `${product.name} — MIVERON`,
+      description,
+      url: productUrl,
+      siteName: "MIVERON",
+      type: "website",
+      images: product.image
+        ? [
+            {
+              url: product.image,
+              width: 800,
+              height: 800,
+              alt: product.name,
+            },
+          ]
+        : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${product.name} — MIVERON`,
+      description,
+      images: product.image ? [product.image] : [],
+    },
+  };
+}
+
+export default async function ProductPage({ params }) {
+  const { id } = await params;
+
+  const product = await getProduct(id);
 
   if (!product) {
     notFound();
   }
 
-  const relatedProducts = products
-    .filter((p) => p.collection === product.collection && p.id !== product.id)
-    .slice(0, 3);
+  const relatedProducts = await getRelatedProducts(product.collection, id);
+
+  // Product JSON-LD structured data
+  const productJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    description:
+      product.description ||
+      `${product.name} — premium luxury watch from MIVERON`,
+    image: product.image || "",
+    brand: {
+      "@type": "Brand",
+      name: "MIVERON",
+    },
+    offers: {
+      "@type": "Offer",
+      url: `${BASE_URL}/product/${product.id}`,
+      priceCurrency: "EGP",
+      price: product.price,
+      availability: product.inStock !== false
+        ? "https://schema.org/InStock"
+        : "https://schema.org/OutOfStock",
+      seller: {
+        "@type": "Organization",
+        name: "MIVERON",
+      },
+      shippingDetails: {
+        "@type": "OfferShippingDetails",
+        shippingRate: {
+          "@type": "MonetaryAmount",
+          value: "0",
+          currency: "EGP",
+        },
+        shippingDestination: {
+          "@type": "DefinedRegion",
+          addressCountry: "EG",
+        },
+        deliveryTime: {
+          "@type": "ShippingDeliveryTime",
+          handlingTime: {
+            "@type": "QuantitativeValue",
+            minValue: 1,
+            maxValue: 3,
+            unitCode: "DAY",
+          },
+          transitTime: {
+            "@type": "QuantitativeValue",
+            minValue: 2,
+            maxValue: 5,
+            unitCode: "DAY",
+          },
+        },
+      },
+    },
+  };
+
+  // Add specifications if available
+  if (product.caseSize || product.movement || product.caseMaterial) {
+    productJsonLd.additionalProperty = [];
+    if (product.caseSize) {
+      productJsonLd.additionalProperty.push({
+        "@type": "PropertyValue",
+        name: "Case Size",
+        value: product.caseSize,
+      });
+    }
+    if (product.movement) {
+      productJsonLd.additionalProperty.push({
+        "@type": "PropertyValue",
+        name: "Movement",
+        value: product.movement,
+      });
+    }
+    if (product.caseMaterial) {
+      productJsonLd.additionalProperty.push({
+        "@type": "PropertyValue",
+        name: "Case Material",
+        value: product.caseMaterial,
+      });
+    }
+    if (product.waterResistance) {
+      productJsonLd.additionalProperty.push({
+        "@type": "PropertyValue",
+        name: "Water Resistance",
+        value: product.waterResistance,
+      });
+    }
+  }
 
   return (
-    <div className={styles.page}>
-      <div className={styles.container}>
-        {/* Breadcrumb */}
-        <nav className={styles.breadcrumb} aria-label="Breadcrumb">
-          <Link href="/" className={styles.breadcrumbLink}>Home</Link>
-          <span className={styles.breadcrumbSep}>/</span>
-          <Link href="/shop" className={styles.breadcrumbLink}>Shop</Link>
-          <span className={styles.breadcrumbSep}>/</span>
-          <span className={styles.breadcrumbCurrent}>{product.name}</span>
-        </nav>
-
-        <div className={styles.layout}>
-          {/* Image */}
-          <div className={styles.imageSection}>
-            <div className={styles.imageMain}>
-              <Image
-                src={product.image}
-                alt={product.name}
-                fill
-                priority
-                sizes="(max-width: 768px) 100vw, 55vw"
-                className={styles.productImage}
-              />
-              {product.badge && (
-                <span className={styles.badge}>{product.badge}</span>
-              )}
-            </div>
-          </div>
-
-          {/* Details */}
-          <div className={styles.details}>
-            <div className={styles.detailsTop}>
-              <span className={styles.collection}>
-                {product.collection} Collection
-              </span>
-              <h1 className={styles.productName}>{product.name}</h1>
-              <p className={styles.tagline}>{product.tagline}</p>
-              <p className={styles.price}>
-                {product.currency} {product.price.toLocaleString()}
-              </p>
-            </div>
-
-            <div className={styles.divider} />
-
-            {/* Specs */}
-            <div className={styles.specs}>
-              <h3 className={styles.specsTitle}>Specifications</h3>
-              <div className={styles.specsList}>
-                <div className={styles.specRow}>
-                  <span className={styles.specLabel}>Case Size</span>
-                  <span className={styles.specValue}>{product.caseSize}</span>
-                </div>
-                <div className={styles.specRow}>
-                  <span className={styles.specLabel}>Movement</span>
-                  <span className={styles.specValue}>{product.movement}</span>
-                </div>
-                <div className={styles.specRow}>
-                  <span className={styles.specLabel}>Case</span>
-                  <span className={styles.specValue}>{product.caseMaterial}</span>
-                </div>
-                <div className={styles.specRow}>
-                  <span className={styles.specLabel}>Crystal</span>
-                  <span className={styles.specValue}>{product.crystal}</span>
-                </div>
-                <div className={styles.specRow}>
-                  <span className={styles.specLabel}>Strap</span>
-                  <span className={styles.specValue}>{product.strapMaterial}</span>
-                </div>
-                <div className={styles.specRow}>
-                  <span className={styles.specLabel}>Water Resistance</span>
-                  <span className={styles.specValue}>{product.waterResistance}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className={styles.divider} />
-
-            {/* Features */}
-            <div className={styles.features}>
-              <h3 className={styles.specsTitle}>Features</h3>
-              <ul className={styles.featureList}>
-                {product.features.map((f, idx) => (
-                  <li key={idx} className={styles.featureItem}>
-                    <span className={styles.featureDot} />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className={styles.divider} />
-
-            {/* Add to Cart */}
-            {product.inStock ? (
-              <button
-                className={styles.addToCart}
-                onClick={() => addItem(product)}
-                id="add-to-cart"
-              >
-                Add to Bag — {product.currency} {product.price.toLocaleString()}
-              </button>
-            ) : (
-              <div className={styles.soldOutWrap}>
-                <button className={styles.soldOutBtn} disabled>
-                  Sold Out
-                </button>
-                <p className={styles.soldOutText}>
-                  This piece is no longer available. Join the waitlist for the next drop.
-                </p>
-              </div>
-            )}
-
-            <p className={styles.shipping}>
-              Free shipping across Egypt · Cash on Delivery available
-            </p>
-          </div>
-        </div>
-
-        {/* Related Products */}
-        {relatedProducts.length > 0 && (
-          <div className={styles.related}>
-            <h2 className={styles.relatedTitle}>You might also like</h2>
-            <div className={styles.relatedGrid}>
-              {relatedProducts.map((p) => (
-                <Link href={`/product/${p.id}`} key={p.id} className={styles.relatedCard}>
-                  <div className={styles.relatedImageWrap}>
-                    <Image
-                      src={p.image}
-                      alt={p.name}
-                      fill
-                      sizes="(max-width: 768px) 50vw, 25vw"
-                      className={styles.relatedImage}
-                    />
-                  </div>
-                  <div className={styles.relatedInfo}>
-                    <h4 className={styles.relatedName}>{p.name}</h4>
-                    <p className={styles.relatedPrice}>
-                      {p.currency} {p.price.toLocaleString()}
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(productJsonLd),
+        }}
+      />
+      <ProductDetail product={product} relatedProducts={relatedProducts} />
+    </>
   );
 }

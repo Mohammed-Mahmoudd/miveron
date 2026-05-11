@@ -14,13 +14,23 @@
   display: flex;
   gap: var(--space-xl);
   white-space: nowrap;
-  animation: marquee 30s linear infinite;
+  animation: marqueeScroll 25s linear infinite;
   font-family: var(--font-display);
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--smoke);
+  width: max-content;
+}
+
+@keyframes marqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .dot {
@@ -38,7 +48,7 @@
 
 .grid {
   display: grid;
-  grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+  grid-template-columns: 1.5fr 1fr 1fr;
   gap: var(--space-3xl);
   margin-bottom: var(--space-3xl);
 }

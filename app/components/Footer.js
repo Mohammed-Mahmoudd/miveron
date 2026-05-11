@@ -35,9 +35,9 @@ export default function Footer() {
           {/* Brand */}
           <div className={styles.brand}>
             <h3 className={styles.brandName}>MIVERON</h3>
-            <p className={styles.brandSub}>Est. Cairo / صنع في القاهرة</p>
+            <p className={styles.brandSub}>Luxury Watch Store / متجر ساعات فاخرة</p>
             <p className={styles.brandDesc}>
-              Premium watches for the ones who move first. / ساعات فاخرة لمن يصنعون الفارق.
+              Curated premium watches for the ones who move first. / تشكيلة مختارة من الساعات الفاخرة لمن يصنعون الفارق.
             </p>
           </div>
 
@@ -58,31 +58,24 @@ export default function Footer() {
             </Link>
           </div>
 
-          {/* Brand */}
+          {/* Connect */}
           <div className={styles.col}>
-            <h4 className={styles.colTitle}>Brand / علامتنا</h4>
+            <h4 className={styles.colTitle}>Connect / تواصل</h4>
             <Link href="/contact" className={styles.link}>
               Contact Us
             </Link>
-          </div>
-
-          {/* Newsletter */}
-          <div className={styles.col}>
-            <h4 className={styles.colTitle}>Stay Ahead / كن أول من يعلم</h4>
-            <p className={styles.newsletterText}>
-              Be the first to know about drops. / اشترك لتصلك أحدث الإصدارات.
-            </p>
-            <div className={styles.emailWrap}>
-              <input
-                type="email"
-                placeholder="your@email.com"
-                className={styles.emailInput}
-                id="footer-email"
-              />
-              <button className={styles.emailBtn} id="footer-subscribe">
-                →
-              </button>
-            </div>
+            <a href="https://wa.me/201501685539" target="_blank" rel="noopener noreferrer" className={styles.link}>
+              WhatsApp
+            </a>
+            <a href="https://www.instagram.com/its.miveron/" target="_blank" rel="noopener noreferrer" className={styles.link}>
+              Instagram
+            </a>
+            <a href="https://www.facebook.com/share/1BKDLECa7m/" target="_blank" rel="noopener noreferrer" className={styles.link}>
+              Facebook
+            </a>
+            <a href="https://www.tiktok.com/@miveron1" target="_blank" rel="noopener noreferrer" className={styles.link}>
+              TikTok
+            </a>
           </div>
         </div>
 
@@ -92,7 +85,7 @@ export default function Footer() {
           </p>
           <div className={styles.socials}>
             <a
-              href="https://instagram.com/miveron"
+              href="https://www.instagram.com/its.miveron/"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.socialLink}
@@ -101,7 +94,16 @@ export default function Footer() {
               Instagram
             </a>
             <a
-              href="https://tiktok.com/@miveron"
+              href="https://www.facebook.com/share/1BKDLECa7m/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.socialLink}
+              aria-label="Facebook"
+            >
+              Facebook
+            </a>
+            <a
+              href="https://www.tiktok.com/@miveron1"
               target="_blank"
               rel="noopener noreferrer"
               className={styles.socialLink}

@@ -233,8 +233,11 @@
 }
 
 .checkoutBtn {
+  display: block;
+  text-align: center;
   width: 100%;
   padding: 16px;
+  margin-bottom: var(--space-md);
   background: var(--white);
   color: var(--black);
   font-family: var(--font-display);

@@ -83,6 +83,10 @@
   border-color: var(--white);
 }
 
+.filterTabActive:hover {
+  color: var(--black) !important;
+}
+
 .sortSelect {
   padding: 8px 16px;
   background: var(--carbon);

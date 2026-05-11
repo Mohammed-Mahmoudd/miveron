@@ -64,6 +64,48 @@
 
 .productImage {
   object-fit: cover;
+  transition: opacity 0.4s var(--ease-out);
+}
+
+.thumbnailGrid {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
+  overflow-x: auto;
+  padding-bottom: var(--space-xs);
+  scrollbar-width: none;
+}
+
+.thumbnailGrid::-webkit-scrollbar {
+  display: none;
+}
+
+.thumbnail {
+  flex: 0 0 80px;
+  height: 80px;
+  position: relative;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: var(--carbon);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  padding: 0;
+}
+
+.activeThumb {
+  border-color: var(--white);
+}
+
+.thumbImg {
+  object-fit: cover;
+  opacity: 0.6;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}
+
+.thumbnail:hover .thumbImg,
+.activeThumb .thumbImg {
+  opacity: 1;
 }
 
 .badge {
@@ -130,6 +172,51 @@
   height: 1px;
   background: rgba(245, 245, 245, 0.06);
   margin: var(--space-xl) 0;
+}
+
+/* Variants */
+.variantSection {
+  margin-top: var(--space-lg);
+}
+
+.variantLabel {
+  font-size: 0.8rem;
+  color: var(--mist);
+  margin-bottom: var(--space-md);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.variantName {
+  color: var(--white);
+  font-weight: 600;
+  margin-left: var(--space-xs);
+}
+
+.colorGrid {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+}
+
+.colorCircle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  position: relative;
+  padding: 0;
+}
+
+.colorCircle:hover {
+  transform: scale(1.1);
+}
+
+.activeColor {
+  border-color: var(--white);
+  box-shadow: 0 0 0 2px var(--black), 0 0 0 4px var(--white);
 }
 
 /* Specs */

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { products, collections } from "../data/products";
+import { collections } from "../data/products";
+import { client } from "../../lib/sanity";
 import styles from "./collections.module.css";
 
 export const metadata = {
@@ -8,7 +9,25 @@ export const metadata = {
   description: "Explore MIVERON's watch collections: Core, Icon, and Limited.",
 };
 
-export default function CollectionsPage() {
+export default async function CollectionsPage() {
+  const query = `*[_type == "product" && !(_id in path("drafts.**"))]{
+    "id": _id,
+    name,
+    price,
+    "collection": collection,
+    "image": image.asset->url,
+    badge,
+    tagline,
+    currency
+  }`;
+  
+  let products = [];
+  try {
+    products = await client.fetch(query) || [];
+  } catch (error) {
+    console.error("Sanity fetch error:", error);
+  }
+
   return (
     <div className={styles.page}>
       <div className={styles.container}>
@@ -22,7 +41,7 @@ export default function CollectionsPage() {
         <div className={styles.collectionsStack}>
           {collections.map((col, idx) => {
             const colProducts = products.filter(
-              (p) => p.collection.toLowerCase() === col.id
+              (p) => p.collection && p.collection.toLowerCase() === col.id
             );
 
             return (
@@ -57,7 +76,7 @@ export default function CollectionsPage() {
                         <h4 className={styles.productName}>{p.name}</h4>
                         <p className={styles.productTagline}>{p.tagline}</p>
                         <p className={styles.productPrice}>
-                          {p.currency} {p.price.toLocaleString()}
+                          {p.currency} {p.price?.toLocaleString()}
                         </p>
                       </div>
                     </Link>

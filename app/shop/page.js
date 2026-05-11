@@ -1,108 +1,75 @@
-"use client";
+import { client } from "../../lib/sanity";
+import ShopContent from "./ShopContent";
 
-import { useState, useMemo } from "react";
-import { useSearchParams } from "next/navigation";
-import { products, collections } from "../data/products";
-import ProductCard from "../components/ProductCard";
-import styles from "./shop.module.css";
-import { Suspense } from "react";
+export const metadata = {
+  title: "Shop All Luxury Watches",
+  description:
+    "Browse our full collection of premium luxury watches. Free delivery across Egypt. Cash on delivery available. تسوق ساعات فاخرة مع توصيل مجاني",
+  keywords: [
+    "shop watches Egypt",
+    "buy luxury watches",
+    "premium watches online",
+    "تسوق ساعات",
+    "ساعات فاخرة",
+    "MIVERON collection",
+    "watches free delivery Egypt",
+  ],
+  alternates: {
+    canonical: "https://miveron.com/shop",
+  },
+  openGraph: {
+    title: "Shop All Luxury Watches — MIVERON",
+    description:
+      "Browse our full collection of premium luxury watches with free delivery across Egypt.",
+    url: "https://miveron.com/shop",
+    type: "website",
+  },
+};
 
-function ShopContent() {
-  const searchParams = useSearchParams();
-  const initialCollection = searchParams.get("collection") || "all";
-  const [activeFilter, setActiveFilter] = useState(initialCollection);
-  const [sortBy, setSortBy] = useState("featured");
-
-  const filtered = useMemo(() => {
-    let result = [...products];
-
-    if (activeFilter !== "all") {
-      result = result.filter(
-        (p) => p.collection.toLowerCase() === activeFilter
-      );
-    }
-
-    switch (sortBy) {
-      case "price-low":
-        result.sort((a, b) => a.price - b.price);
-        break;
-      case "price-high":
-        result.sort((a, b) => b.price - a.price);
-        break;
-      default:
-        break;
-    }
-
-    return result;
-  }, [activeFilter, sortBy]);
-
-  return (
-    <div className={styles.page}>
-      <div className={styles.container}>
-        {/* Header */}
-        <div className={styles.header}>
-          <div>
-            <span className={styles.label}>Collection</span>
-            <h1 className={styles.title}>All Watches</h1>
-          </div>
-          <p className={styles.count}>{filtered.length} pieces</p>
-        </div>
-
-        {/* Filters */}
-        <div className={styles.filters}>
-          <div className={styles.filterTabs}>
-            <button
-              className={`${styles.filterTab} ${activeFilter === "all" ? styles.filterTabActive : ""}`}
-              onClick={() => setActiveFilter("all")}
-              id="filter-all"
-            >
-              All
-            </button>
-            {collections.map((col) => (
-              <button
-                key={col.id}
-                className={`${styles.filterTab} ${activeFilter === col.id ? styles.filterTabActive : ""}`}
-                onClick={() => setActiveFilter(col.id)}
-                id={`filter-${col.id}`}
-              >
-                {col.name}
-              </button>
-            ))}
-          </div>
-
-          <select
-            className={styles.sortSelect}
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            id="sort-select"
-          >
-            <option value="featured">Featured</option>
-            <option value="price-low">Price: Low → High</option>
-            <option value="price-high">Price: High → Low</option>
-          </select>
-        </div>
-
-        {/* Products Grid */}
-        <div className={styles.grid}>
-          {filtered.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-
-        {filtered.length === 0 && (
-          <div className={styles.empty}>
-            <p>No watches found in this collection.</p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
+async function getProducts() {
+  const query = `*[_type == "product" && !(_id in path("drafts.**"))]{
+    "id": _id,
+    name,
+    price,
+    "collection": collection,
+    "image": image.asset->url,
+    color,
+    description,
+    badge,
+    currency,
+    inStock
+  }`;
+  const data = await client.fetch(query);
+  return data || [];
 }
 
-export default function ShopPage() {
+export default async function ShopPage() {
+  const products = await getProducts();
+
+  // ItemList JSON-LD for product listing page
+  const itemListJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "MIVERON Luxury Watch Collection",
+    description: "Premium luxury watches with free delivery across Egypt",
+    numberOfItems: products.length,
+    itemListElement: products.map((product, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: `https://miveron.com/product/${product.id}`,
+      name: product.name,
+    })),
+  };
+
   return (
-    <Suspense>
-      <ShopContent />
-    </Suspense>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(itemListJsonLd),
+        }}
+      />
+      <ShopContent products={products} />
+    </>
   );
 }
