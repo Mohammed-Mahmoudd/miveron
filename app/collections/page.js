@@ -44,6 +44,14 @@ export default async function CollectionsPage() {
               (p) => p.collection && p.collection.toLowerCase() === col.id
             );
 
+            // Calculate dynamic price range
+            const prices = colProducts.map(p => p.price).filter(p => p != null);
+            const minPrice = prices.length > 0 ? Math.min(...prices) : 0;
+            const maxPrice = prices.length > 0 ? Math.max(...prices) : 0;
+            const dynamicRange = prices.length > 0 
+              ? `EGP ${minPrice.toLocaleString()} — ${maxPrice.toLocaleString()}`
+              : col.priceRange; 
+
             return (
               <div key={col.id} className={styles.collectionSection} id={`collection-section-${col.id}`}>
                 <div className={styles.collectionHeader}>
@@ -54,7 +62,7 @@ export default async function CollectionsPage() {
                       <p className={styles.collectionDesc}>{col.description}</p>
                     </div>
                   </div>
-                  <span className={styles.collectionPrice}>{col.priceRange}</span>
+                  <span className={styles.collectionPrice}>{dynamicRange}</span>
                 </div>
 
                 <div className={styles.productsRow}>
