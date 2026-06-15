@@ -1,7 +1,7 @@
 <div align="center">
 
-<!-- Header Background Banner -->
-<img src="https://capsule-render.vercel.app/api?type=rect&color=0:000000,40:0d0d0d,60:111111,100:000000&height=280&section=header&text=MIVERON&fontSize=90&fontColor=ffffff&fontAlignY=45&fontAlign=50&desc=EST.%20CAIRO%20%2F%20ميفرون&descSize=16&descAlignY=65&descAlign=50&animation=fadeIn&stroke=ffffff&strokeWidth=0" width="100%"/>
+<!-- Animated Header Banner -->
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0a0a0a,50:1a1a1a,100:0a0a0a&height=200&section=header&text=MIVERON&fontSize=80&fontColor=ffffff&fontAlignY=38&desc=EST.%20CAIRO%20%2F%20ميفرون&descSize=18&descAlignY=62&animation=fadeIn&fontFamily=georgia" width="100%"/>
 
 <!-- Typing Animation -->
 <a href="https://miveron.com">
