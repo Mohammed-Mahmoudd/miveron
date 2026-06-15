@@ -10,6 +10,13 @@
 !.yarn/releases
 !.yarn/versions
 
+# package managers
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.npm
+.pnpm-store
+
 # testing
 /coverage
 
@@ -24,13 +31,23 @@
 .DS_Store
 *.pem
 
+# root images
+Group 4.png
+Group 4 (1).png
+Group 4 (2).png
+Group 4 (3).png
+Group 4 (4).png
+
+# or ignore all PNGs in root
+# /*.png
+
 # debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
+# env files
 .env*
 
 # vercel
