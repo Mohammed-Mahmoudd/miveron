@@ -10,6 +10,11 @@
 
 <br/>
 
+<!-- Hero Image -->
+<img src="https://raw.githubusercontent.com/Mohammed-Mahmoudd/miveron/main/Hero.png" width="100%" alt="Miveron — Set The Standard"/>
+
+<br/>
+
 <!-- Divider -->
 <img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%">
 
