@@ -1,4 +1,4 @@
-import { client } from "../lib/sanity";
+import { client, applyPriceAdjustment } from "../lib/sanity";
 import HomeContent from "./HomeContent";
 
 async function getProducts() {
@@ -15,7 +15,7 @@ async function getProducts() {
     currency
   }`;
   const data = await client.fetch(query);
-  return data || [];
+  return applyPriceAdjustment(data || []);
 }
 
 export default async function Home() {

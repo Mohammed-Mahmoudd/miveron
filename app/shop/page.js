@@ -1,4 +1,4 @@
-import { client } from "../../lib/sanity";
+import { client, applyPriceAdjustment } from "../../lib/sanity";
 import ShopContent from "./ShopContent";
 
 export const metadata = {
@@ -40,7 +40,7 @@ async function getProducts() {
     inStock
   }`;
   const data = await client.fetch(query);
-  return data || [];
+  return applyPriceAdjustment(data || []);
 }
 
 export default async function ShopPage() {

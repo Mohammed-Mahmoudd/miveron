@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { collections } from "../data/products";
-import { client } from "../../lib/sanity";
+import { client, applyPriceAdjustment } from "../../lib/sanity";
 import styles from "./collections.module.css";
 
 export const metadata = {
@@ -23,7 +23,7 @@ export default async function CollectionsPage() {
   
   let products = [];
   try {
-    products = await client.fetch(query) || [];
+    products = applyPriceAdjustment(await client.fetch(query) || []);
   } catch (error) {
     console.error("Sanity fetch error:", error);
   }

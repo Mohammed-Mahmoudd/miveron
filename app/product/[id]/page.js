@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { client } from "../../../lib/sanity";
+import { client, applyPriceAdjustment } from "../../../lib/sanity";
 import ProductDetail from "./ProductDetail";
 
 const BASE_URL = "https://miveron.com";
@@ -31,7 +31,7 @@ async function getProduct(id) {
     inStock
   }`;
 
-  return await client.fetch(query, { id });
+  return applyPriceAdjustment(await client.fetch(query, { id }));
 }
 
 async function getRelatedProducts(collection, excludeId) {
@@ -46,7 +46,7 @@ async function getRelatedProducts(collection, excludeId) {
   }`;
 
   const data = await client.fetch(query, { collection, id: excludeId });
-  return data || [];
+  return applyPriceAdjustment(data || []);
 }
 
 // Dynamic metadata for each product page
