@@ -44,7 +44,7 @@
   flex-direction: column;
   justify-content: center;
   padding: var(--space-3xl) clamp(var(--space-xl), 4vw, var(--space-4xl));
-  background: linear-gradient(to right, rgba(0,0,0,0.7) 50%, transparent 100%);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.7) 50%, transparent 100%);
 }
 
 .heroLabel {
@@ -107,6 +107,42 @@
 
 .heroBtn:hover svg {
   transform: translateX(3px);
+}
+
+/* ── FOR YOU SECTION ── */
+.forYouSection {
+  padding: var(--space-3xl) 0 var(--space-2xl) 0;
+  background: var(--black);
+}
+
+.forYouHeader {
+  margin-bottom: var(--space-xl);
+}
+
+.forYouEyebrow {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--mist);
+  margin-bottom: var(--space-sm);
+}
+
+.forYouTitle {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  font-weight: 700;
+  color: var(--white);
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+.forYouGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl);
 }
 
 /* ── UNIFIED PRODUCTS SECTION ── */
@@ -387,12 +423,180 @@
   transform: translateX(4px);
 }
 
-/* ── RESPONSIVE ── */
+/* ── SPOTLIGHT SECTION ── */
+.spotlightSection {
+  padding: var(--space-4xl) 0;
+  background: var(--carbon);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
 
+.spotlightWrapper {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4xl);
+  background: var(--black);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.spotlightImageCol {
+  flex: 1;
+  position: relative;
+  min-height: 500px;
+  background: #111;
+}
+
+.spotlightImage {
+  object-fit: cover;
+  object-position: center;
+}
+
+.spotlightContentCol {
+  flex: 1;
+  padding: var(--space-3xl);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.spotlightEyebrow {
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: var(--mist);
+  text-transform: uppercase;
+  margin-bottom: var(--space-md);
+}
+
+.spotlightTitle {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3vw, 3rem);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.1;
+  margin-bottom: var(--space-md);
+}
+
+.spotlightDesc {
+  font-size: 1rem;
+  color: var(--mist);
+  line-height: 1.6;
+  margin-bottom: var(--space-xl);
+  max-width: 90%;
+}
+
+.spotlightSpecs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-2xl);
+  border-left: 2px solid rgba(255, 255, 255, 0.1);
+  padding-left: var(--space-md);
+}
+
+.spotlightSpecItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 300px;
+}
+
+.specLabel {
+  font-size: 0.8rem;
+  color: var(--mist);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.specValue {
+  font-size: 0.85rem;
+  color: var(--white);
+  font-weight: 600;
+}
+
+.spotlightBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  background: var(--white);
+  color: var(--black);
+  padding: 14px 32px;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  transition: all 0.3s ease;
+}
+
+.spotlightBtn:hover {
+  background: var(--cream);
+  color: var(--black) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.15);
+}
+
+/* ── BRAND STORY SECTION ── */
+.brandStorySection {
+  padding: var(--space-4xl) var(--space-xl);
+  background: var(--carbon);
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 300px;
+}
+
+.brandStoryContent {
+  max-width: 800px;
+}
+
+.brandStoryTitle {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 700;
+  color: var(--white);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--space-lg);
+  background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.highlightOnline {
+  font-style: italic;
+  font-weight: 300;
+  background: none;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.6);
+}
+
+.brandStorySub {
+  font-size: 1.1rem;
+  color: var(--mist);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ── RESPONSIVE ── */
 /* Tablet landscape */
 @media (max-width: 1024px) {
   .productsGrid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .forYouGrid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-md);
   }
 
   .heroTextBlock {
@@ -401,6 +605,23 @@
 }
 
 /* Tablet portrait */
+@media (max-width: 768px) {
+  .spotlightWrapper {
+    flex-direction: column;
+    gap: 0;
+  }
+  .spotlightImageCol {
+    width: 100%;
+    min-height: 350px;
+  }
+  .spotlightContentCol {
+    padding: var(--space-xl);
+  }
+  .brandStorySection {
+    padding: var(--space-3xl) var(--space-lg);
+    min-height: 300px;
+  }
+
 @media (max-width: 768px) {
   .container {
     padding: 0 var(--space-md);
@@ -420,7 +641,7 @@
   .heroTextBlock {
     width: 60%;
     padding: var(--space-lg);
-    background: linear-gradient(to right, rgba(0,0,0,0.8) 50%, transparent 100%);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.8) 50%, transparent 100%);
   }
 
   .heroLabel {
@@ -465,6 +686,15 @@
   .filterTab {
     font-size: 0.7rem;
     padding: 8px 14px;
+  }
+
+  .forYouSection {
+    padding: var(--space-2xl) 0 var(--space-lg) 0;
+  }
+
+  .forYouGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-sm);
   }
 
   .socialSection {
@@ -527,7 +757,7 @@
   .heroTextBlock {
     width: 70%;
     padding: var(--space-md);
-    background: linear-gradient(to right, rgba(0,0,0,0.85) 60%, transparent 100%);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.85) 60%, transparent 100%);
   }
 
   .heroHeadline {
@@ -546,6 +776,11 @@
 
   .productsGrid {
     grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+  }
+
+  .forYouGrid {
+    grid-template-columns: 1fr;
     gap: var(--space-sm);
   }
 

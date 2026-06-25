@@ -47,9 +47,6 @@ export default function Footer() {
             <Link href="/shop" className={styles.link}>
               All Watches
             </Link>
-            <Link href="/collections" className={styles.link}>
-              Collections
-            </Link>
             <Link href="/shop?collection=core" className={styles.link}>
               Core
             </Link>

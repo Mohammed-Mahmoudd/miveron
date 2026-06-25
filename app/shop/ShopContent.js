@@ -1,24 +1,22 @@
 "use client";
-
 import { useState, useMemo, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
-import { collections } from "../data/products";
 import ProductCard from "../components/ProductCard";
 import styles from "./shop.module.css";
 
 function ShopInner({ products }) {
-  const searchParams = useSearchParams();
-  const initialCollection = searchParams.get("collection") || "all";
-  const [activeFilter, setActiveFilter] = useState(initialCollection);
+  const [searchQuery, setSearchQuery] = useState("");
   const [sortBy, setSortBy] = useState("featured");
 
   const filtered = useMemo(() => {
     let result = [...products];
 
-    if (activeFilter !== "all") {
-      result = result.filter(
-        (p) => p.collection && p.collection.toLowerCase() === activeFilter
-      );
+    if (searchQuery.trim() !== "") {
+      const q = searchQuery.toLowerCase();
+      result = result.filter((p) => {
+        const name = p.name?.toLowerCase() || "";
+        const description = p.description?.toLowerCase() || "";
+        return name.includes(q) || description.includes(q);
+      });
     }
 
     switch (sortBy) {
@@ -33,7 +31,7 @@ function ShopInner({ products }) {
     }
 
     return result;
-  }, [products, activeFilter, sortBy]);
+  }, [products, searchQuery, sortBy]);
 
   return (
     <div className={styles.page}>
@@ -49,26 +47,39 @@ function ShopInner({ products }) {
 
         {/* Filters */}
         <div className={styles.filters}>
-          <div className={styles.filterTabs}>
-            <button
-              className={`${styles.filterTab} ${activeFilter === "all" ? styles.filterTabActive : ""}`}
-              onClick={() => setActiveFilter("all")}
-              id="filter-all"
+          <div className={styles.searchBar}>
+            <svg
+              className={styles.searchIcon}
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
             >
-              All
-            </button>
-            {collections.map((col) => (
-              <button
-                key={col.id}
-                className={`${styles.filterTab} ${activeFilter === col.id ? styles.filterTabActive : ""}`}
-                onClick={() => setActiveFilter(col.id)}
-                id={`filter-${col.id}`}
-              >
-                {col.name}
-              </button>
-            ))}
+              <circle cx="11" cy="11" r="8" />
+              <path d="M21 21l-4.35-4.35" />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search watches..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className={styles.searchInput}
+              id="search-watches"
+            />
           </div>
 
+          <select
+            className={styles.sortSelect}
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+            id="sort-select"
+          >
+            <option value="featured">Featured</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+          </select>
         </div>
 
         {/* Products Grid */}
@@ -80,7 +91,7 @@ function ShopInner({ products }) {
 
         {filtered.length === 0 && (
           <div className={styles.empty}>
-            <p>No watches found in this collection.</p>
+            <p>No watches found matching your search.</p>
           </div>
         )}
       </div>

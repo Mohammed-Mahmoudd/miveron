@@ -11,6 +11,36 @@
   padding: 0 var(--space-xl);
 }
 
+.whatsappBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 18px var(--space-xl);
+  background: #25D366;
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: var(--radius-sm);
+  transition: all var(--duration-fast);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.whatsappBtn:hover {
+  background: #1aad54;
+  color: #fff;
+}
+
+.ctaRow {
+  display: flex;
+  gap: 12px;
+  margin-top: var(--space-xl);
+  align-items: stretch;
+}
+
 /* Breadcrumb */
 .breadcrumb {
   display: flex;
@@ -280,6 +310,7 @@
 
 /* Add to Cart */
 .addToCart {
+  flex: 1;
   width: 100%;
   padding: 18px;
   background: var(--white);
@@ -291,7 +322,8 @@
   text-transform: uppercase;
   border-radius: var(--radius-sm);
   transition: all var(--duration-normal) var(--ease-out);
-  margin-top: var(--space-xl);
+  margin-top: 0;
+  /* removed, ctaRow handles spacing */
 }
 
 .addToCart:hover {
@@ -398,6 +430,16 @@
   .layout {
     grid-template-columns: 1fr;
     gap: var(--space-2xl);
+  }
+
+  .ctaRow {
+    flex-direction: column;
+  }
+
+  .whatsappBtn {
+    width: 100%;
+    justify-content: center;
+    padding: 16px;
   }
 
   .imageSection {

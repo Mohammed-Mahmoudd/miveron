@@ -12,6 +12,17 @@ import styles from "./page.module.css";
 export default function HomeContent({ products }) {
   const [activeFilter, setActiveFilter] = useState("all");
 
+  const forYouProducts = useMemo(() => {
+    return products
+      .filter(
+        (p) =>
+          typeof p.badge === "string" &&
+          p.badge.trim().toLowerCase() === "for you" &&
+          p.inStock !== false
+      )
+      .slice(0, 3);
+  }, [products]);
+
   const filteredProducts = useMemo(() => {
     if (activeFilter === "all") {
       return products.filter((p) => p.inStock !== false).slice(0, 8);
@@ -46,14 +57,43 @@ export default function HomeContent({ products }) {
             />
             <div className={styles.heroTextBlock}>
               <span className={styles.heroLabel} data-anim="hero-label">ICON COLLECTION</span>
-              <h1 className={styles.heroHeadline} data-anim="hero-headline">Set The<br/>Standard.</h1>
+              <h1 className={styles.heroHeadline} data-anim="hero-headline">Set The<br />Standard.</h1>
               <p className={styles.heroSub} data-anim="hero-sub">The premier luxury watch store for those who move first.</p>
               <Link href="/shop" className={styles.heroBtn} data-anim="hero-btn">
                 SHOP NOW
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
               </Link>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ── FOR YOU ── */}
+      {forYouProducts.length > 0 && (
+        <section className={styles.forYouSection}>
+          <div className={styles.container}>
+            <div className={styles.forYouHeader}>
+              <span className={styles.forYouEyebrow}>For You</span>
+              <h2 className={styles.forYouTitle}>Picked for your wrist.</h2>
+            </div>
+
+            <div className={styles.forYouGrid}>
+              {forYouProducts.map((product) => {
+                const { badge, ...productWithoutBadge } = product;
+                return (
+                  <ProductCard key={product.id} product={productWithoutBadge} />
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── BRAND STORY ── */}
+      <section className={styles.brandStorySection}>
+        <div className={styles.brandStoryContent}>
+          <h2 className={styles.brandStoryTitle}>First <span className={styles.highlightOnline}>Online</span> Market in Egypt for Watches</h2>
+          <p className={styles.brandStorySub}>Setting the standard for luxury, precision, and trust.</p>
         </div>
       </section>
 
@@ -64,7 +104,7 @@ export default function HomeContent({ products }) {
             <h2 className={styles.sectionTitle}>The Collection</h2>
             <Link href="/shop" className={styles.viewAllBtn}>
               SHOP ALL
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
             </Link>
           </div>
 
@@ -97,7 +137,7 @@ export default function HomeContent({ products }) {
           <div className={styles.shopAllCta}>
             <Link href="/shop" className={styles.shopAllCtaBtn}>
               VIEW ENTIRE COLLECTION
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
             </Link>
           </div>
         </div>
@@ -116,43 +156,43 @@ export default function HomeContent({ products }) {
             <a href="https://www.instagram.com/its.miveron/" target="_blank" rel="noopener noreferrer" className={styles.socialLink} data-anim="social-card">
               <div className={styles.socialIconWrap}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className={styles.socialIcon}>
-                  <rect x="2" y="2" width="20" height="20" rx="5"/>
-                  <circle cx="12" cy="12" r="5"/>
-                  <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/>
+                  <rect x="2" y="2" width="20" height="20" rx="5" />
+                  <circle cx="12" cy="12" r="5" />
+                  <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
                 </svg>
               </div>
               <span className={styles.socialPlatform}>Instagram</span>
               <span className={styles.socialHandle}>@miveron</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={styles.socialArrow}><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={styles.socialArrow}><path d="M7 17L17 7M17 7H7M17 7v10" /></svg>
             </a>
 
             <a href="https://www.tiktok.com/@miveron1" target="_blank" rel="noopener noreferrer" className={styles.socialLink} data-anim="social-card">
               <div className={styles.socialIconWrap}>
                 <svg viewBox="0 0 24 24" fill="currentColor" className={styles.socialIcon}>
-                  <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9a6.33 6.33 0 00-.79-.05A6.34 6.34 0 003.15 15.3a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V9.37a8.16 8.16 0 004.76 1.51v-3.4a4.85 4.85 0 01-1-.79z"/>
+                  <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9a6.33 6.33 0 00-.79-.05A6.34 6.34 0 003.15 15.3a6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.34-6.34V9.37a8.16 8.16 0 004.76 1.51v-3.4a4.85 4.85 0 01-1-.79z" />
                 </svg>
               </div>
               <span className={styles.socialPlatform}>TikTok</span>
               <span className={styles.socialHandle}>@miveron</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={styles.socialArrow}><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={styles.socialArrow}><path d="M7 17L17 7M17 7H7M17 7v10" /></svg>
             </a>
 
             <a href="https://www.facebook.com/share/1BKDLECa7m/" target="_blank" rel="noopener noreferrer" className={styles.socialLink} data-anim="social-card">
               <div className={styles.socialIconWrap}>
                 <svg viewBox="0 0 24 24" fill="currentColor" className={styles.socialIcon}>
-                  <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
+                  <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" />
                 </svg>
               </div>
               <span className={styles.socialPlatform}>Facebook</span>
               <span className={styles.socialHandle}>MIVERON</span>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={styles.socialArrow}><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={styles.socialArrow}><path d="M7 17L17 7M17 7H7M17 7v10" /></svg>
             </a>
           </div>
 
           <div className={styles.ctaWrap} data-anim="social-card">
             <Link href="/shop" className={styles.ctaBtn}>
               SHOP ALL COLLECTION
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
             </Link>
           </div>
         </div>

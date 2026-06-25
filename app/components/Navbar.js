@@ -58,11 +58,11 @@ export default function Navbar() {
 
           {/* Desktop Nav */}
           <div className={styles.desktopNav}>
+            <Link href="/" className={styles.navLink}>
+              Home
+            </Link>
             <Link href="/shop" className={styles.navLink}>
               Shop
-            </Link>
-            <Link href="/collections" className={styles.navLink}>
-              Collections
             </Link>
             <Link href="/contact" className={styles.navLink}>
               Contact
