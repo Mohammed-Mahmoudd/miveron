@@ -24,6 +24,7 @@ export async function POST(req) {
       if (item.color) message += `   Color: ${item.color}\n`;
       message += `   Link: https://miveron.com/product/${item.id}\n\n`;
     });
+    // send cash on delivery
 
     message += `\n💰 *Payment Details*\n`;
     message += `Subtotal: EGP ${totalPrice.toLocaleString()}\n`;
