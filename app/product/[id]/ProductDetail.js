@@ -16,7 +16,7 @@ export default function ProductDetail({ product, relatedProducts }) {
   const { addItem } = useCart();
 
   const whatsappMessage = encodeURIComponent(
-    `Hi, I'm interested in this product: ${product.name}\nhttps://miveron.com/product/${product.id}`
+    `Hi, I'm interested in this product: ${product.name}${selectedVariant ? ` (Color: ${selectedVariant.colorName})` : ''}\nhttps://miveron.com/product/${product.id}`
   );
 
   return (
@@ -122,7 +122,16 @@ export default function ProductDetail({ product, relatedProducts }) {
 
                 <button
                   className={styles.addToCart}
-                  onClick={() => addItem(product)}
+                  onClick={() => {
+                    const itemToAdd = selectedVariant
+                      ? {
+                          ...product,
+                          color: selectedVariant.colorName || product.color,
+                          image: selectedVariant.image || product.image,
+                        }
+                      : product;
+                    addItem(itemToAdd);
+                  }}
                   id="add-to-cart"
                 >
                   Add to Bag — {product.currency} {product.price?.toLocaleString()}

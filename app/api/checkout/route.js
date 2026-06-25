@@ -10,18 +10,21 @@ export async function POST(req) {
 
     // Format the message
     let message = `🚨 *NEW ORDER RECEIVED - MIVERON* 🚨\n\n`;
-    
+
     message += `👤 *Customer Info*\n`;
     message += `Name: ${formData.firstName} ${formData.lastName}\n`;
     message += `Phone: ${formData.phone}\n`;
     message += `Email: ${formData.email}\n`;
     message += `Address: ${formData.address}, ${formData.city}, ${formData.governorate}\n\n`;
-    
+
     message += `📦 *Order Summary (${totalItems} items)*\n`;
     items.forEach((item, index) => {
-      message += `${index + 1}. ${item.name} | Qty: ${item.quantity} | EGP ${item.price.toLocaleString()}\n`;
+      message += `${index + 1}. *${item.name}*\n`;
+      message += `   Qty: ${item.quantity} | EGP ${item.price.toLocaleString()}\n`;
+      if (item.color) message += `   Color: ${item.color}\n`;
+      message += `   Link: https://miveron.com/product/${item.id}\n\n`;
     });
-    
+
     message += `\n💰 *Payment Details*\n`;
     message += `Subtotal: EGP ${totalPrice.toLocaleString()}\n`;
     message += `Shipping: EGP ${shipping.toLocaleString()}\n`;
@@ -41,7 +44,7 @@ export async function POST(req) {
     });
 
     const data = await response.json();
-    
+
     if (!data.ok) {
       throw new Error(data.description || "Failed to send telegram message");
     }
